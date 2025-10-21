@@ -2,9 +2,10 @@
 ---
 ## 📝 Informacion general 
 Somos un equipo de pseudo-desarrolladores aprendiendo herramientas basicas de front-end, la encomienda de esta actividad es usar una API (de eleccion libre) para reforzar lo aprendido en clase. 
+
 De esta manera llegamos a la API "The movieDB" con la que se pueda desarrollar una página web de recomendación de películas y series. La plataforma  ofrece  base de datos completa con fichas técnicas y artísticas de películas, documentales, cortometrajes, y series de televisión.
 
-*En desarrollo*
+Importante este proyecto se encuentra: *En desarrollo*
 ---
 ## Características Actuales
 
@@ -22,14 +23,17 @@ Se desea que la pagina cuneta con la siguiente funcionalidad:
 ---
 ## 🛠️ Tecnologías Utilizadas 
 Para el desarrollo de este proyecto nos apoyamos principalmente de las siguientes herramientas
+
 Frontend: 
--`HTML`
--`JavaScript`
+- `HTML`
+- `JavaScript`
+
 API: 
 - The MovieDB (TMDB) API v3
+
 Estilos: 
--`css`
--`Bootstrap`
+- `css`
+- `Bootstrap`
 
 ---
 
