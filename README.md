@@ -51,10 +51,17 @@ git clone https://github.com/Vhinil-O/Reto_02_Pelicula
 cd nombre-local-de-tu-proyecto
 ```
 ---
+
+## Actualizaciones
+- 
+
+---
+
 ## 🪪 Nosotros
 - Hinojosa Ruiz Zianya Samanta
 - Medina González Edgar de Jesús
 - Ornelas Galván Paola Itzel
 - Sánchez Padilla Diego Emmanuel
+
 
 
