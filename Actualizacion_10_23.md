@@ -89,10 +89,6 @@ El footer desarrollado por 🥷Zianya es el siguiente
 
 Y debido a problemas con entender la concepcion del JavaScript las unicas modificaciones fueron en config.js
 
-```
-
-```
-
 ---
 ## Otras actualizaciones
 
