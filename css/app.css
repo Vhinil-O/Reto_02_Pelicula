@@ -1,0 +1,13 @@
+#btn-filtros{  /*cambia la palabra filtro de color*/
+    color: #494949;
+}
+/* Placeholder centrado y color personalizado */
+#input-busqueda::placeholder {
+    text-align: center !important;
+    color: #6c757d !important; /* Color gris de Bootstrap secondary */
+    opacity: 1 !important;
+}
+
+#input-busqueda{ /*controla el borde del input busqueda*/
+    border-radius: 50px;
+}
