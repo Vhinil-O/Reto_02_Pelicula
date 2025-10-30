@@ -48,11 +48,6 @@
     <main id="rowsContainer" class="container my-4">
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-
-    <script src="config.js"></script>
-    <script src="./js/app.js"></script>
-
     <footer class="footer">
         <div class="waves">
           <div class="wave" id="wave1"></div>
@@ -79,5 +74,25 @@
           POPFLIX🍿 Copyright © 2025 popflix - Todos los derechos reservados   || Creador por: nosotros 
         </p>
     </footer>
+
+    <!-- Modal para el detalle de al película-->
+    <div id="detailModal" class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content bg-black text-light">
+                <div class="modal-header border-secondary">
+                    <h5 id="detailTitle" class="modal-title">Detail</h5>
+                    <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div id="detailBody" class="modal-body">
+                    Cargando...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+    <script src="config.js"></script>
+    <script src="./js/app.js"></script>
   </body>
 </html>
