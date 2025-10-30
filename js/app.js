@@ -9,6 +9,7 @@ const heroTitle = document.getElementById('heroTitle');
 const heroDesc = document.getElementById('heroDesc');
 const heroPlay = document.getElementById('heroPlay');
 
+
 // Función para traer datos en formato JSON
 const fetchJSON = async (url) => {
   const res = await fetch(`${url}${url.includes('?') ? '&' : '?'}api_key=${API_KEY}&language=es-MX`);
@@ -24,6 +25,7 @@ const init = async () => {
   const movies = data.results || [];
   const randomMovie = movies[Math.floor(Math.random() * movies.length)];
   renderHero(randomMovie);
+  searchBar();
 };
 
 // Función para bloque del inicio
@@ -76,7 +78,55 @@ const renderHero = async (movie) => {
   });
 };
 
+//funcion para barra de busqueda
+  const searchBar = () => {
+    const input = document.getElementById('inputSearch')
+
+    input.addEventListener('keyup', async (e) =>{  // e verifica el evento
+       
+       if (e.key !== 'Enter') { //detecta el enter para buscar
+        return;
+       }// fin del if e key
+       const query = input.value.trim()
+       if (!query) {
+            return;
+        }
+
+       try {
+        const data = await fetchJSON(`${API}/search/movie?query=${encodeURIComponent(query)}`);
+        if (data.results && data.results.length > 0) {
+           console.log('Resultados encontrados', data.results.length)
+           const primerPelicula = data.results[0] //obtiene la primer coincidencia
+           renderHero(primerPelicula);
+           console.log('Resto de resultado', data.results.slice(1)) ;
+        } else {
+          showMessage(`No se encontraron resultados para ${query}`) 
+        }
+       } catch (error) {
+        console.log('Error en busqueda', error)
+        showMessage('Error al buscar. Intenta nuevamente')
+       } 
+    })
+    
+  }
+
+ 
+
+ const showMessage = (message) => {
+    rowsContainer.innerHTML = `
+        <div class="text-center py-5">
+            <h3 class="text-secondary">${message}</h3>
+        </div>
+    `;
+};
+
+const openMovieDetail = (movieId) => {
+    console.log('Abriendo detalles de película:', movieId);
+    alert(`Próximamente: Detalles de la película ID: ${movieId}`);
+};
+
 init();
+
 
 
 
