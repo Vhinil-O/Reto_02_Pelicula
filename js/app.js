@@ -127,10 +127,6 @@ const escapeHTML = s => {
     return (s||"").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
 
-
-
-
-
 init();
 
 
