@@ -22,8 +22,11 @@ const stripHTML = (html) => (html || "").replace(/<[^>]*>/g, "");
 const init = async () => {
   const data = await fetchJSON(`${API}/movie/popular?page=1`);
   const movies = data.results || [];
+  console.log('@@@movies ->',movies.slice(0,20).map(movie => movie.poster_path))
   const randomMovie = movies[Math.floor(Math.random() * movies.length)];
   renderHero(randomMovie);
+
+  renderRow("Tendencias", movies.slice(0,20))
 };
 
 // Función para bloque del inicio
@@ -75,6 +78,58 @@ const renderHero = async (movie) => {
     }
   });
 };
+
+const renderRow = (title, shows) => {
+    const section = document.createElement('section')
+    section.classList = 'mb-3'
+    section.innerHTML = 
+    `
+        <h3 class="rowTitle">${title}</h3>
+        <div class="rail" data-rail></div>
+    `
+    const rail = section.querySelector('[data-rail]')
+    shows.forEach ((show) => {
+        rail.appendChild(posterCard(show))
+    })
+
+    rowsContainer.appendChild(section)    
+}
+
+const posterCard = show => {
+    const card = document.createElement('div');
+    card.className = 'card card-poster';
+
+    const imgBaseUrl = 'https://image.tmdb.org/t/p/w500'; 
+    const placeholder = 'https://placehold.co/600x400?text=Sin+Imagen';
+
+    const img = show.poster_path 
+                ? `${imgBaseUrl}${show.poster_path}` 
+                : placeholder;
+    const title = show.title;
+
+    card.innerHTML = 
+    `
+        <img class="card-img-top" src="${img}">
+        <div class="card-body p-2">
+            <div class="small text-secondary">
+                </div>
+            <div class="fw-semibold">
+                ${escapeHTML(title)} </div>
+        </div>
+    `;
+
+    card.addEventListener('click', () => openDetail(show.id));
+    return card;
+}
+
+
+const escapeHTML = s => {
+    return (s||"").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+
+
+
 
 init();
 
