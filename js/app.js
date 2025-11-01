@@ -126,53 +126,97 @@ const escapeHTML = s => {
     return (s||"").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
 
+const starHTML = (voteAvg=0) => {
+  const n = Math.round(voteAvg/2); // TMDB 0-10 -> 0-5 estrellas
+  return `<span class="stars">${
+    Array.from({length:5}, (_,i)=>`<i class="star ${i<n?'fill':''}"></i>`).join('')
+  }</span><span>${(voteAvg||0).toFixed(1)}</span>`;
+};
+
+const badge = (txt) => `<span class="badge bg-secondary me-1">${txt}</span>`;
+
+const imgUrl = (path, size='w500') =>
+  path ? `https://image.tmdb.org/t/p/${size}${path}` : 'https://placehold.co/800x1200?text=Sin+Imagen'
+;
+
 // Función para mostrar el detalle de una película en un modal
-const openDetail = async (id) => {
-  const modalEl = document.getElementById('detailModal')
-  const modalBody = document.getElementById('detailBody')
-  const modalTitle = document.getElementById('detailTitle')
-  modalTitle.textContent = 'Cargando...'
-  modalBody.innerHTML = '<p class="text-secondary">Cargando información...</p>'
+async function openDetail(id){
+  const modalEl   = document.getElementById('detailModal');
+  const modalBody = document.getElementById('detailBody');
+  const modal     = bootstrap.Modal.getOrCreateInstance(modalEl);
 
-  const modal = bootstrap.Modal.getOrCreateInstance(modalEl)
+  modalBody.innerHTML = `<div class="p-4 text-secondary">Cargando información...</div>`;
+  modal.show();
 
-  const movie = await fetchJSON(`${API}/movie/${id}`) // Obtener detalles de la película a través de la API
-  const videos = await fetchJSON(`${API}/movie/${id}/videos`)
-  const youtubeTrailer = videos.results.find(v => v.site === "YouTube" && v.type === "Trailer")
-  const genres = (movie.genres || []).map(g => `
-  <span class="badge bg-secondary me-1">${g.name}</span>
-  `).join("")
+  const [movie, videos, similar] = await Promise.all([
+    fetchJSON(`${API}/movie/${id}`),
+    fetchJSON(`${API}/movie/${id}/videos`),
+    fetchJSON(`${API}/movie/${id}/similar?page=1`)
+  ]);
 
-  // Extraer detalles para mostrarlos en el modal
-  modalTitle.textContent = movie.title || 'Sin título'
+  const youtubeTrailer = (videos.results||[]).find(v=>v.site==="YouTube" && v.type==="Trailer");
+
+  const heroBG = imgUrl(movie.backdrop_path || movie.poster_path, 'w1280');
+  const genres = (movie.genres||[]).map(g=>badge(g.name)).join('');
+  const sims = (similar.results||[]).slice(0,12).map(s => `
+    <div class="similar-card" data-id="${s.id}">
+      <img src="${imgUrl(s.poster_path,'w342')}" alt="${escapeHTML(s.title||s.name||'')}" />
+      <div class="t">${escapeHTML(s.title||s.name||'')}</div>
+    </div>
+  `).join('');
+
   modalBody.innerHTML = `
-    <div class="row g-4">
-      <div class="col-md-5">
-        <img class="img-fluid rounded shadow" src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
+    <div class="modal-hero" style="background-image:url('${heroBG}');">
+      <div class="modal-hero__play">
+        ${youtubeTrailer ? `<button id="playTrailer" title="Ver tráiler">▶</button>` : ``}
       </div>
-      <div class="col-md-7">
-        <p class="mb-1 text-secondary">
-          <strong>${movie.release_date?.slice(0,4) || 'N/A'}</strong> | ${(movie.original_language || '').toUpperCase()} | ⭐ ${movie.vote_average?.toFixed(1) || 'N/A'}
-        </p>
-        <div class="mb-2">${genres}</div>
-        <h6 class="fw-bold mb-2">Sinopsis</h6>
-        <p class="small text-light mb-3">
-          ${stripHTML(movie.overview || 'Sin descripción disponible.')}
-        </p>
+    </div>
+
+    <div class="modal-section vertical-layout">
+      <img class="img-fluid rounded-3 shadow-sm poster-center" 
+          src="${imgUrl(movie.poster_path,'w500')}" 
+          alt="${escapeHTML(movie.title||'')}" />
+
+      <div class="title-row">
+        <h3 class="mb-0">${escapeHTML(movie.title || movie.name || 'Sin título')}</h3>
+        <div class="rating-info">${starHTML(movie.vote_average)}</div>
+      </div>
+
+      <div class="meta-small mb-2">
+        ${(movie.release_date||movie.first_air_date||'N/A').slice(0,4)} | 
+        ${(movie.original_language||'').toUpperCase()} | 
+        ${(movie.genres||[]).map(g=>badge(g.name)).join('')}
+      </div>
+
+      <div class="modal-about">
+        <h6>Sinopsis</h6>
+        <p>${stripHTML(movie.overview || 'Sin descripción disponible.')}</p>
         ${youtubeTrailer ? `
-          <a class="btn btn-danger" href="https://www.youtube.com/watch?v=${youtubeTrailer.key}" target="_blank">
+          <a class="btn btn-danger mt-1" href="https://www.youtube.com/watch?v=${youtubeTrailer.key}" target="_blank">
             ▷ Ver Tráiler
-          </a>
-          ` : `
-            <button class="btn btn-secondary" disabled>
-              Tráiler no disponible
-            </button>
-          `}
-        </div>
+          </a>` : `
+          <button class="btn btn-secondary mt-1" disabled>Tráiler no disponible</button>
+        `}
       </div>
-      ${movie.similar ? `<hr><h6>Similares</h6>` : ''}
-    `
-    modal.show()
+    </div>
+
+    ${ (similar.results||[]).length ? `
+      <h6 class="similar-title">Otros usuarios también buscaron</h6>
+      <div class="similar-rail" id="similarRail">${sims}</div>` : ``}
+  `
+  ;
+
+  if (youtubeTrailer){
+    const btn = document.getElementById('playTrailer');
+    btn?.addEventListener('click', () => {
+      window.open(`https://www.youtube.com/watch?v=${youtubeTrailer.key}`, '_blank');
+    });
+  }
+
+  document.getElementById('similarRail')?.addEventListener('click', (e)=>{
+    const card = e.target.closest('.similar-card');
+    if(card){ openDetail(card.getAttribute('data-id')); }
+  });
 }
 
 init()
