@@ -26,13 +26,13 @@ const init = async () => {
   console.log('@@@movies ->',movies.slice(0,20).map(movie => movie.poster_path))
   const randomMovie = movies[Math.floor(Math.random() * movies.length)];
   renderHero(randomMovie);
-<<<<<<< HEAD
+  renderRow("Tendencias", movies.slice(0,20))
   searchBar();
 };
-=======
-  renderRow("Tendencias", movies.slice(0,20))
-}
->>>>>>> main
+
+  
+
+
 
 // Función para bloque del inicio
 const renderHero = async (movie) => {
@@ -81,7 +81,7 @@ const renderHero = async (movie) => {
     } else {
       alert("Esta película no tiene tráiler disponible :(")
     }
-<<<<<<< HEAD
+
   });
 };
 
@@ -105,6 +105,13 @@ const renderHero = async (movie) => {
            console.log('Resultados encontrados', data.results.length)
            const primerPelicula = data.results[0] //obtiene la primer coincidencia
            renderHero(primerPelicula);
+
+           const restoPeliculas = data.results.slice(1);
+           rowsContainer.innerHTML = ''
+           if (restoPeliculas.length > 0) {
+            renderRow(`Resultados para ${query}`, restoPeliculas) //solo funciona en caso de que haya mas de un
+           }
+
            console.log('Resto de resultado', data.results.slice(1)) ;
         } else {
           showMessage(`No se encontraron resultados para ${query}`) 
@@ -132,11 +139,8 @@ const openMovieDetail = (movieId) => {
     alert(`Próximamente: Detalles de la película ID: ${movieId}`);
 };
 
-init();
-=======
-  })
-}
->>>>>>> main
+
+
 
 const renderRow = (title, shows) => {
     const section = document.createElement('section')
@@ -236,7 +240,4 @@ const openDetail = async (id) => {
 }
 
 init()
-
-
-
 
