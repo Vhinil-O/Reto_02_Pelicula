@@ -104,3 +104,51 @@
     background-positon-x: 0px;
   }
 }
+
+/* Página responsiva */
+
+/* Para tablet y laptop pequeña */
+@media (max-width: 992px) {
+
+    .footer {
+        padding: 20px 24px;
+    }
+
+    .social-icon__link img {
+        width: 34px;
+        height: 34px;
+    }
+
+    .footer p {
+        font-size: 1rem;
+    }
+
+    .wave {
+        background-size: 800px 100px;
+    }
+}
+
+/* Para móviles */
+@media (max-width: 576px) {
+
+    .footer {
+        padding: 16px 16px;
+    }
+
+    .social-icon {
+        gap: 10px;
+    }
+
+    .social-icon__link img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .footer p {
+        font-size: .9rem;
+    }
+
+    .wave {
+        background-size: 600px 100px;
+    }
+}

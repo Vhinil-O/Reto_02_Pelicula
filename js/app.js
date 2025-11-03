@@ -296,7 +296,7 @@ const loadGenres = async () => {
       `;
     }
   } catch (error) {
-    console.log('Error en busqueda', error)
+    console.log('Error en búsqueda', error)
     showMessage('Error al buscar. Intenta nuevamente')
   }
 }
@@ -397,6 +397,14 @@ async function openDetail(id){
     if(card){ openDetail(card.getAttribute('data-id')); }
   });
 }
+
+// TRepresentación visual de selección en botones dentro del offcanvas de filtros
+document.getElementById('offcanvasFiltros')?.addEventListener('click', (e) => {
+  const b = e.target.closest('.btn.rounded-pill');
+  if (!b) return;
+  b.classList.toggle('active');
+});
+
 
 init()
 
