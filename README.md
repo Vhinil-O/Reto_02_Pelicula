@@ -4,6 +4,7 @@
 Somos un equipo de pseudo-desarrolladores aprendiendo herramientas basicas de front-end. La encomienda de esta actividad es usar una API (de elección libre) para reforzar lo aprendido en clase. 
 
 De esta manera llegamos a la API "The movieDB" con la que se pueda desarrollar una página web de recomendación de películas y series. La plataforma  ofrece  base de datos completa con fichas técnicas y artísticas de películas, documentales, cortometrajes, y series de televisión.
+
 ---
 ## Características Actuales
 
