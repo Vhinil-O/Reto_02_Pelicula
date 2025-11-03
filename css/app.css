@@ -48,11 +48,22 @@ html, body {
 
 #inputSearch{
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%236c757d' viewBox='0 0 512 512'%3E%3Cpath d='M505 442.7L405.3 343c28.4-34.9 45.7-79.4 45.7-127C451 103.5 349.5 2 225.5 2S0 103.5 0 216.1 101.5 430.2 225.5 430.2c48 0 92.3-17.3 127.2-45.8L442.7 505c4.5 4.5 10.6 7 17 7s12.5-2.5 17-7c9.4-9.4 9.4-24.6 0-34zM48 216.1c0-98.2 79.3-177.8 177.5-177.8S403 117.9 403 216.1s-79.3 177.8-177.5 177.8S48 314.3 48 216.1z'/%3E%3C/svg%3E");
-    background: transparent;
     background-repeat: no-repeat;
     background-size: 14px;
     background-position: calc(50% - 55px) center;
     color: #dee2e6;
+}
+
+.form-control {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #e9eaf6;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.form-control::placeholder {
+  color: rgba(233, 234, 246, 0.6);
 }
 
 #hero {
