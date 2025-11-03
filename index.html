@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="./css/app.css">
     <link rel="stylesheet" href="./css/footer.css">
 </head>
-  <body>
+  <body class="bg-dark text-light">
     <header class="bg-header"> <!--header para la barra de navegacion -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark"> <!-- navbar-expand-lg Controla cuándo la navbar se expande/colapsa-->
       <div class="container" id="container-navbar">  <!--CONTAINER Centra el contenido y añade padding lateral --- Alternativas: container-fluid (en caso de necesitar ancho completo)-->
@@ -54,8 +54,6 @@
       </div>
     </nav>
   </header>
-    
-  <body class="bg-dark text-light">
     <section id="hero" class="container my-5">
     </section>
 
@@ -115,7 +113,7 @@
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content bg-black text-light">
                 <div class="modal-header border-secondary">
-                    <h5 id="detailTitle" class="modal-title">Detail</h5>
+                    <h5 id="detailTitle" class="modal-title">Detalles</h5>
                     <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div id="detailBody" class="modal-body">
@@ -126,18 +124,13 @@
     </div>
 
     <!-- Modal para el detalle de al película-->
-    <div id="detailModal" class="modal fade" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
-            <div class="modal-content bg-black text-light">
-                <div class="modal-header border-secondary">
-                    <h5 id="detailTitle" class="modal-title">Detail</h5>
-                    <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div id="detailBody" class="modal-body">
-                    Cargando...
-                </div>
-            </div>
+    <div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content modal-dark">
+          <button type="button" class="btn-close btn-close-white modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div id="detailBody"></div>
         </div>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>

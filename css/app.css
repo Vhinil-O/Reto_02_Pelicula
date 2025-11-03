@@ -1,16 +1,17 @@
-body {
-    background-color: #0d0d0f;
-    font-family: "Inter", sans-serif;
+nav, body {
+  background-color: #0d0d0f;
+  font-family: "Inter", sans-serif;
 }
 
 #btn-filtros{  /*cambia la palabra filtro de color*/
-    color: white;
+  color: white;
 }
+
 /* Placeholder centrado y color personalizado */
 #inputSearch::placeholder, #inputSearchMobile::placeholder {
-    text-align: center !important;
-    color: #6c757d !important; /* Color gris de Bootstrap secondary */
-    opacity: 1 !important;
+  text-align: center !important;
+  color: #6c757d !important; /* Color gris de Bootstrap secondary */
+  opacity: 1 !important;
 }
 
 #inputSearch, #inputSearchMobile{ /*controla el borde del input busqueda*/
@@ -18,61 +19,61 @@ body {
 }
 
 #hero {
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .text-init {
-    color: #1CD5F8;
-    font-size: 16px;
+  color: #1CD5F8;
+  font-size: 16px;
 }
 
 #heroTitle {
-    padding-top: 20px;
-    font-size: 44px;
+  padding-top: 20px;
+  font-size: 44px;
 }
 
 .text-sec {
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .btn {
-    background-color: #4F46E5;
-    color: #FFFFFF;
-    border-radius: 30px;
-    font-size: 16px;
+  background-color: #4F46E5;
+  color: #FFFFFF;
+  border-radius: 30px;
+  font-size: 16px;
 }
 
 .btn:hover {
-    background-color: #4a43d6c5;
+  background-color: #4a43d6c5;
 }
 
 .shadow {
-    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.35) !important;
+  box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.35) !important;
 }
 
 .icon-media {
-    font-size: 44px;
-    border-radius: 1rem !important;
-    padding-top: 30px;
-    display: block;
-    max-width: 1000px;
-    width: 100%;
-    margin: 0 auto;
+  font-size: 44px;
+  border-radius: 1rem !important;
+  padding-top: 30px;
+  display: block;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .rail {
-    display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-    padding-bottom: .5rem;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    scroll-behavior: smooth;
-    overflow: auto;
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: .5rem;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  overflow: auto;
 }
 
 .card-poster {
@@ -84,20 +85,217 @@ body {
 }
 
 .card-poster img {
-    aspect-ratio: 2/3;
-    object-fit: cover;
-    border-radius: 1rem;
-    width: 90%;
-    margin: 0 auto;
-    display: block;
-    margin-top: 10px;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  border-radius: 1rem;
+  width: 90%;
+  margin: 0 auto;
+  display: block;
+  margin-top: 10px;
 }
 
 .badge-genre {
-    background-color: #e50914;
+  background-color: #e50914;
 }
 
 .btn-fil-nav {
-    background-color: transparent !important;
-    border: none !important;   
+  background-color: transparent !important;
+  border: none !important;   
+}
+
+.modal-dark{
+  background:#0b0c18;
+  color:#e9eaf6;
+  border:1px solid #23243b;
+  border-radius:18px;
+  overflow:hidden;
+}
+
+.modal-close{
+  position:absolute; 
+  right:14px; 
+  top:14px; 
+  z-index:3; 
+  filter:invert(1) contrast(120%);
+}
+
+.modal-hero{
+  position:relative; 
+  height:360px; 
+  background:#111;
+  background-position:center; 
+  background-size:cover;
+  border-bottom:1px solid #1f2034;
+}
+
+.modal-hero::after{
+  content:""; 
+  position:absolute; 
+  inset:0;
+  background:linear-gradient(180deg,rgba(10,11,22,.15) 0%, rgba(10,11,22,.35) 40%, rgba(10,11,22,.85) 100%);
+}
+
+.modal-hero__play{
+  position:absolute; 
+  inset:0; 
+  display:grid; 
+  place-items:center; 
+  z-index:2;
+}
+
+.modal-hero__play button{
+  width:64px;
+  height:64px;
+  border-radius:999px;
+  border:none;
+  background:rgba(255,255,255,.9);
+  display:grid;
+  place-items:center; 
+  font-size:26px; 
+  line-height:0;
+}
+
+.modal-section{ 
+  padding:24px 24px 8px; 
+}
+
+.modal-meta{
+  opacity:.85; 
+  font-size:.95rem; 
+  display:flex; 
+  gap:.5rem; 
+  flex-wrap:wrap;
+}
+
+.stars{ 
+  display:inline-flex; 
+  gap:4px; 
+  vertical-align:middle; 
+  margin-right:6px;
+}
+
+.star{ 
+  width:16px; 
+  height:16px; 
+  display:inline-block; 
+  mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>') no-repeat center / contain; 
+  background:#444;
+}
+
+.star.fill{ 
+    background:#f6c945; 
+}
+
+.vertical-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.poster-center {
+  width: 260px;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.title-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.title-row h3 {
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #fff;
+}
+
+.rating-info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.meta-small {
+  opacity: 0.8;
+  font-size: 0.95rem;
+  color: #aaa;
+}
+
+.modal-about {
+  max-width: 680px;
+  color: #ddd;
+}
+
+.modal-about h6 {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.modal-about .btn {
+  margin-top: 0.5rem;
+}
+
+.modal-about p{ 
+  color:#cfd0e6; 
+}
+
+.modal-grid{
+  display:grid; 
+  gap:18px;
+  grid-template-columns: 1fr;
+}
+
+/* Mostrar pelis similares */
+.similar-title{ 
+  margin:8px 24px; 
+  opacity:.9;
+}
+
+.similar-rail{ 
+  display:flex; 
+  gap:14px; 
+  padding:0 24px 24px; 
+  overflow:auto; 
+}
+
+.similar-card{
+  width:150px; 
+  flex:0 0 auto; 
+  background:#14152a; 
+  border:1px solid #222445;
+  border-radius:14px; 
+  overflow:hidden; 
+  cursor:pointer;
+}
+
+.similar-card img{ 
+  width:100%; 
+  height:210px; 
+  object-fit:cover; 
+  display:block; 
+}
+
+.similar-card .t{ 
+  font-size:.85rem; 
+  padding:8px 10px; 
+  white-space:nowrap; 
+  overflow:hidden; 
+  text-overflow:ellipsis; 
+}
+
+.modal-backdrop.show{ 
+  opacity:.6; 
+}
+
+/*Página responsive*/
+@media (min-width: 992px){
+  .modal-grid{ 
+    grid-template-columns: 2fr 3fr; 
+  }
 }
