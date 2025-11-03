@@ -27,7 +27,9 @@ const init = async () => {
   const randomMovie = movies[Math.floor(Math.random() * movies.length)];
   renderHero(randomMovie);
   renderRow("Tendencias", movies.slice(0,20))
-  searchBar();
+  setupSearchListeners();
+  loadGenres();
+  setupGenreListener();
 };
 
   
@@ -86,44 +88,41 @@ const renderHero = async (movie) => {
 };
 
 //funcion para barra de busqueda
-  const searchBar = () => {
-    const input = document.getElementById('inputSearch')
+const setupSearchListeners = () => {
+  const inputDesktop = document.getElementById('inputSearch');
+  const inputMobile = document.getElementById('inputSearchMobile');
 
-    input.addEventListener('keyup', async (e) =>{  // e verifica el evento
-       
-       if (e.key !== 'Enter') { //detecta el enter para buscar
-        return;
-       }// fin del if e key
-       const query = input.value.trim()
-       if (!query) {
-            return;
-        }
+  
+  inputDesktop.addEventListener('keyup', async (e) => {// Listener para el input de Desktop
+    if (e.key !== 'Enter') {
+      return;
+    }
+    const query = inputDesktop.value.trim();
+    if (!query) {
+      return;
+    }
+    performSearchLogic(query);  //seacrhBar
+  });
 
-       try {
-        const data = await fetchJSON(`${API}/search/movie?query=${encodeURIComponent(query)}`);
-        if (data.results && data.results.length > 0) {
-           console.log('Resultados encontrados', data.results.length)
-           const primerPelicula = data.results[0] //obtiene la primer coincidencia
-           renderHero(primerPelicula);
+  
+  inputMobile.addEventListener('keyup', async (e) => {// Listener para el input de Móvil
+    if (e.key !== 'Enter') {
+      return;
+    }
+    const query = inputMobile.value.trim();
+    if (!query) {
+      return;
+    }
+    performSearchLogic(query);
 
-           const restoPeliculas = data.results.slice(1);
-           rowsContainer.innerHTML = ''
-           if (restoPeliculas.length > 0) {
-            renderRow(`Resultados para ${query}`, restoPeliculas) //solo funciona en caso de que haya mas de un
-           }
-
-           console.log('Resto de resultado', data.results.slice(1)) ;
-        } else {
-          showMessage(`No se encontraron resultados para ${query}`) 
-        }
-       } catch (error) {
-        console.log('Error en busqueda', error)
-        showMessage('Error al buscar. Intenta nuevamente')
-       } 
-    })
-    
-  }
-
+    // Se cierra el canvas 
+    const offcanvasEl = document.getElementById('offcanvasBusqueda');
+    const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasEl);
+    if (offcanvas) {
+      offcanvas.hide();
+    }
+  });
+}
  
 
  const showMessage = (message) => {
@@ -237,6 +236,135 @@ const openDetail = async (id) => {
       ${movie.similar ? `<hr><h6>Similares</h6>` : ''}
     `
     modal.show()
+}
+
+
+const loadGenres = async () => {
+  const listaGeneros = document.getElementById('lista-generos');
+  try {
+ 
+    const data = await fetchJSON(`${API}/genre/movie/list`);    //se llama al endpoint de la API que nos da los géneros.
+    const generos = data.genres || [];
+    listaGeneros.innerHTML = ''; 
+    generos.forEach(genero => {
+      
+      const btn = document.createElement('button'); //Se crea un elemento <button> nuevo por cada género.
+      btn.className = 'btn btn-outline-light text-start';
+      btn.textContent = genero.name; //Se le asigna el nombre del género al botón.
+      btn.dataset.id = genero.id; 
+      listaGeneros.appendChild(btn);
+    });
+
+  } catch (error) {
+    console.error("Error al cargar géneros:", error);
+    listaGeneros.innerHTML = '<p class="text-danger">No se pudieron cargar los géneros.</p>';
+  }
+};
+
+
+ const searchByGenre = async  (id, name) => {
+  console.log(`Buscando peliculas del genero ${name} (ID:${id})`);
+
+  try {
+    const data = await fetchJSON(`${API}/discover/movie?with_genres=${id}`)
+    hero.innerHTML='';
+    rowsContainer.innerHTML='';
+
+    if (data.results && data.results.length > 0) {
+     
+      await renderHero(data.results[0])
+      //cositas para que tenga sentido el texto del hero
+      const heroSpan = hero.querySelector('.text-init'); // Busca el <span>
+      const heroH1 = hero.querySelector('#heroTitle'); // Busca el <h1>
+
+      if (heroSpan) {
+           heroSpan.textContent = `Películas más populares de "${name}"`;
+       }
+       if (heroH1) {
+           //Usar innerHTML para mantener el span del título
+           heroH1.innerHTML = `Disfruta de "<span class="text text-sec">${data.results[0].title}</span>"`;
+       }
+
+
+      renderRow(`Filtrado por "${name}"`, data.results.slice(1));
+    } else {
+      rowsContainer.innerHTML = '';
+      hero.innerHTML = '';
+      showMessage(`No se encontraron películas para el género "${name}"`);
+    }
+
+    const offcanvasEl = document.getElementById('offcanvasFiltros');
+    
+    const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasEl); 
+    if (offcanvas) {
+      offcanvas.hide(); // Se obtiene y cierra el offcanvas al escoger un genero
+    }
+
+  } catch (error) {
+    console.error("Error al buscar por género:", error);
+    showMessage('Error al buscar. Intenta nuevamente.');
+  }
+ }
+
+ //se necesita crear una funcion para eschar el click ya que los botones se agregan por js
+ const setupGenreListener = () => {
+  const genreList = document.getElementById('lista-generos')
+  genreList.addEventListener('click', (e) =>{
+    if (e.target.tagName === 'BUTTON') { // verifica si fue un boton al click
+
+      //obtnemos los datos del boton
+      //id y nombre del genero
+      const id = e.target.dataset.id; 
+      const name = e.target.textContent;
+
+      if (id) {  
+        searchByGenre(id, name);
+      }
+    }
+  })
+ }
+
+
+ const performSearchLogic = async (query) => {
+  
+  try {
+    const data = await fetchJSON(`${API}/search/movie?query=${encodeURIComponent(query)}`);
+    if (data.results && data.results.length > 0) {
+      console.log('Resultados encontrados', data.results.length)
+      const primerPelicula = data.results[0]
+      await renderHero(primerPelicula);
+
+      const heroSpan = hero.querySelector('.text-init');
+      const heroH1 = hero.querySelector('#heroTitle');
+
+      if (heroSpan) {
+        heroSpan.textContent = `Resultado principal para "${query}"`;
+      }
+      if (heroH1) {
+        heroH1.innerHTML = `"<span class="text text-sec">${primerPelicula.title}</span>"`;
+      }
+
+      const restoPeliculas = data.results.slice(1);
+      rowsContainer.innerHTML = ''
+      if (restoPeliculas.length > 0) {
+        renderRow(`Ver más`, restoPeliculas)
+      }
+    } else {
+      rowsContainer.innerHTML = '';
+      hero.innerHTML = `
+        <div class="row align-items-center g-4">
+          <div class="col-12">
+            <h1 id="heroTitle" class="display-6 fw-bold mb-3">
+              No se encontraron resultados para "<span class="text text-sec">${query}</span>"
+            </h1>
+          </div>
+        </div>
+      `;
+    }
+  } catch (error) {
+    console.log('Error en busqueda', error)
+    showMessage('Error al buscar. Intenta nuevamente')
+  }
 }
 
 init()

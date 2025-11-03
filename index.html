@@ -19,24 +19,38 @@
 
          <img src="assets/logo.png" alt="logo popflix" class="me-2"  style="width: 300px; height: auto;">
 
-         
-           <button  class="btn btn-link text-white text-decoration-none ms-3">
-             <span id="btn-filtros" class="me-2">filtros</span>
-          <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M2 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
-          </svg>
-        </button>
-
+       <div class="ms-auto d-flex align-items-center">
+            <button  class="btn btn-link btn-fil-nav text-white text-decoration-none ms-3"
+                                  data-bs-toggle="offcanvas"  
+                                  data-bs-target="#offcanvasFiltros"
+                                  aria-controls="offcanvasFiltros">  
+                                  <!-- toggle aabre el componente, offcanvas desliza desde un lado  -->
+                                  <!-- aria  ayuda a que el sitio sea mas accesible para las personas -->
+                        <span id="btn-filtros" class="me-2">Filtros</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16">
+              <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"/>
+                         </svg>
+             </button>
+       </div>
+      
          <!--Barra de busqueda-->
-         <div class="d-flex align-items-center w-50">
-          <div class="input-group"> <!--Agrupa input -->
-            <input type="text" id="inputSearch" class="form-control bg-dark text-white border-secondary "    placeholder="Busqueda... 🔍"> 
-
-            
-          </div>
-         </div>
         
+            <div class="d-none d-lg-flex align-items-center w-50">
+              <div class="input-group">
+                <input type="text" id="inputSearch" class="form-control bg-dark text-white border-secondary "    placeholder="Busqueda... 🔍"> 
+              </div>  
+            </div>  
 
+              <button class="btn btn-link btn-fil-nav text-white d-lg-none"
+                  data-bs-toggle="offcanvas" 
+                  data-bs-target="#offcanvasBusqueda"
+                  aria-controls="offcanvasBusqueda">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+          </button>
+
+         </div>
       </div>
     </nav>
   </header>
@@ -74,6 +88,42 @@
           POPFLIX🍿 Copyright © 2025 popflix - Todos los derechos reservados   || Creador por: nosotros 
         </p>
     </footer>
+
+<!--html para el filtro lateral -->
+    <div class="offcanvas offcanvas-start bg-dark text-light" tabindex="-1" id="offcanvasFiltros" aria-labelledby="offcanvasFiltrosLabel">
+      <div class="offcanvas-header border-bottom border-secondary">
+        <h5 class="offcanvas-title" id="offcanvasFiltrosLabel">Filtrar por Género</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <div id="lista-generos" class="d-grid gap-2">
+          <p>Cargando géneros...</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="offcanvas offcanvas-top bg-dark text-light" tabindex="-1" id="offcanvasBusqueda" aria-labelledby="offcanvasBusquedaLabel">
+          <div class="offcanvas-header border-bottom border-secondary">
+            <h5 class="offcanvas-title" id="offcanvasBusquedaLabel">Buscar Película</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <input type="text" id="inputSearchMobile" class="form-control bg-dark text-white border-secondary" placeholder="Busqueda... 🔍">
+         </div>
+    </div>
+    <div id="detailModal" class="modal fade" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content bg-black text-light">
+                <div class="modal-header border-secondary">
+                    <h5 id="detailTitle" class="modal-title">Detail</h5>
+                    <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div id="detailBody" class="modal-body">
+                    Cargando...
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal para el detalle de al película-->
     <div id="detailModal" class="modal fade" tabindex="-1" aria-hidden="true">
